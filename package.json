@@ -1,0 +1,26 @@
+{
+  "name": "vue-device-detector",
+  "version": "1.0.0",
+  "description": "A Vue plugin that add global functionality to check the device type, the client is displayed on.",
+  "main": "DeviceDetector.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/weilbith/vue-device-detector.git"
+  },
+  "keywords": [
+    "Vue",
+    "Plugin",
+    "Responsible",
+    "Mobile"
+  ],
+  "author": "Thore Weilbier",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/weilbith/vue-device-detector/issues"
+  },
+  "homepage": "https://github.com/weilbith/vue-device-detector#readme",
+  "devDependencies": {}
+}
