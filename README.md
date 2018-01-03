@@ -2,7 +2,8 @@
 [![Issues](https://img.shields.io/codeclimate/issues/github/me-and/mdf.svg)](#issues)
 
 # vue-device-detector
-A [Vue](https://vuejs.org) plugin that add global functionality to check the device type, the client is displayed on.
+A [Vue](https://vuejs.org) plugin that add global functionality to check a [device type](#device-types), the client is displayed on.
+Moreover it add directives to hide DOM elements on specific [device types](#device-types).<br>
 Works in relation to the [Include Media](https://github.com/eduardoboucas/include-media) _SASS_ library.
 This means that this plugin has the same device types and share the breakpoints to differ them.<br>
 So far this plugin is not hard related to the library, so there is no dependency and changes there will have no affects here.
@@ -17,13 +18,13 @@ So far this plugin is not hard related to the library, so there is no dependency
   - [Practise](#practise)
 - [Usage](#usage)
   - [Functions](#functions)
-  - [Example](#example)
+  - [Directives](#directives)
 <!-- TOC End -->
 
 
 ## Advantage
 This plugin helps to adjust the behavior of your _Vue_ client for different devices. Especially when working with the _Include Media_ library<br>
-Sometimes it is not possibl to simply work with `@include media('...')` in the style sheets, to hide elements or functionality. 
+Sometimes it is not possible to simply work with `@include media('...')` in the style sheets, to hide elements or functionality. 
 In such cases a _Vue_ component method have to know on which device type the client is displayed.
 To be conform with the style sheets, it is useful to have the same understanding what a [device type](#device-types) is and define it the same way.
 Using this plugin provides a good synergy between the script and style parts, when using _Include Media_ (tested with version `1.4.9`)
@@ -109,8 +110,7 @@ The plugin provides three functions to use:
 | `$isDevice` | _Type_ | Check if the device type is exactly the specified one. |
 
 
-### Example
-
+**Examples**
 The plugin functionality is registered globally an can be be accessed by any component.<br>
 
 ```js
@@ -138,4 +138,69 @@ The plugin functionality is registered globally an can be be accessed by any com
     ...
   }
 </script>
+```
+
+
+### Directives
+
+The plugin provide some directives as well. They are used as quick solution to hide elements on specific devices.<br>
+When such a directive is added to an element and the defined device type is detected, the element `display` value will be set to `none`.<br>
+In fact this the same as using it in the style sheet itself like `@include media('>=desktop') { display: none; }`.
+
+| Name | Binding | Description |
+| --- | --- | --- |
+| `v-hide-on-mobile` | _None_ | Hide the element if the device type is part of the lower group. |
+| `v-hide-on-desktop` | _None_ | Hide the element if the device type is part of the upper group. |
+| `v-hide-on-device` | _Type_ | Hide element if the device type is equal the specified type. |
+
+
+**Examples**
+```js
+<template>
+  <div id="my-component">
+     <!-- Hide element on lower group devices -->
+     <div v-hide-on-mobile > Only on desktop </div>
+     
+     <!-- Hide element on upper group devices -->
+     <div v-hide-on-desktop > Only on mobile </div>
+     
+     <!-- Hide element on device type 'mobile' using enumeration object -->
+     <div v-hide-on-device="deviceTypeEnum.mobile" />
+     
+     <!-- Hide element on device type 'tablet' using computed value -->
+     <div v-hide-on-device="device" />
+     
+     <!-- Hide element on device type 'destop' using plain key property -->
+     <div v-hide-on-device="{type: 'desktop'}" />
+  </div>
+</template
+
+<script>
+  import { DeviceTypeEnum } from 'vue-device-detector'
+  
+  export default {
+    data () {
+      return {
+        // Add this here, so it is accessable when render the template.
+        deviceTypeEnum: DeviceTypeEnum,
+        ...
+    },
+    ...
+    computed: {
+      device () {
+        // For some reason specify a device type from here.
+        return DeviceTypeEnum.tablet
+      }
+    }
+  }
+</script>
+
+<style>
+  div {
+    position: relatvie;
+    min-width: 20px;
+    min-height: 20px;
+    background-color: red;
+  }
+<style>
 ```
